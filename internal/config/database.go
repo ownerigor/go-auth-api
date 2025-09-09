@@ -1,0 +1,51 @@
+package config
+
+import (
+	"fmt"
+	"log"
+	"os"
+
+	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+)
+
+type DBConfig struct {
+	Host     string
+	Port     string
+	User     string
+	Password string
+	DBName   string
+	SSLMode  string
+}
+
+var DB *gorm.DB
+
+func LoadConfig() DBConfig {
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Aviso: .env não encontrado, usando variáveis de ambiente do sistema")
+	}
+
+	return DBConfig{
+		Host:     os.Getenv("DB_HOST"),
+		Port:     os.Getenv("DB_PORT"),
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
+		DBName:   os.Getenv("DB_NAME"),
+		SSLMode:  os.Getenv("DB_SSLMODE"),
+	}
+}
+
+func ConnectDataBase(cfg DBConfig) {
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		cfg.Host, cfg.User, cfg.Password, cfg.DBName, cfg.Port, cfg.SSLMode)
+
+	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		panic("Falha ao conectar ao banco de dados!")
+	}
+	DB = database
+	fmt.Println("Banco de dados conectado!")
+}

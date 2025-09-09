@@ -1,18 +1,10 @@
 package main
 
 import (
-	"time"
-
-	"github.com/gin-gonic/gin"
+	"github.com/ownerigor/go-api-auth/internal/config"
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"status":    "ok",
-			"timestamp": time.Now(),
-		})
-	})
-	router.Run(":9000")
+	cfg := config.LoadConfig()
+	config.ConnectDataBase(cfg)
 }
