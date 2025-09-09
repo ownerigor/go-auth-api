@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/ownerigor/go-api-auth/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -37,7 +38,7 @@ func LoadConfig() DBConfig {
 	}
 }
 
-func ConnectDataBase(cfg DBConfig) {
+func ConnectDataBase(cfg DBConfig) *gorm.DB {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
 		cfg.Host, cfg.User, cfg.Password, cfg.DBName, cfg.Port, cfg.SSLMode)
 
@@ -46,6 +47,9 @@ func ConnectDataBase(cfg DBConfig) {
 	if err != nil {
 		panic("Falha ao conectar ao banco de dados!")
 	}
-	DB = database
 	fmt.Println("Banco de dados conectado!")
+
+	database.AutoMigrate(&models.User{})
+
+	return database
 }
