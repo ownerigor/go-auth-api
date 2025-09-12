@@ -3,10 +3,18 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/ownerigor/go-api-auth/internal/handlers"
+	"github.com/ownerigor/go-api-auth/internal/middleware"
 	"gorm.io/gorm"
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
-	r.POST("/signup", handlers.SignupHandler(db))
+	//Public routes
 	r.GET("ping", handlers.PingHandler)
+	r.POST("/signup", handlers.SignupHandler(db))
+
+	auth := r.Group("/")
+	auth.Use(middleware.AuthMiddleware())
+	{
+		auth.GET("/me", handlers.MeHandler(db))
+	}
 }
