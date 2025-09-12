@@ -8,4 +8,5 @@ import (
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	r.POST("/signup", handlers.SignupHandler(db))
+	r.GET("ping", handlers.PingHandler)
 }
