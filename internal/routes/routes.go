@@ -8,7 +8,6 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
-	//Public routes
 	r.GET("ping", handlers.PingHandler)
 	r.POST("/signup", handlers.SignupHandler(db))
 	r.POST("/login", handlers.LoginHashHandler(db))

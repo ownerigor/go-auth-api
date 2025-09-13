@@ -10,10 +10,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var jwtKey = []byte(os.Getenv("JWT_SECRET"))
-
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		jwtKey := []byte(os.Getenv("JWT_SECRET"))
 		tokenString := c.GetHeader("Authorization")
 		tokenString = strings.TrimSpace(strings.TrimPrefix(tokenString, "Bearer "))
 		if tokenString == "" {
