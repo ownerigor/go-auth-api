@@ -4,8 +4,10 @@ Basic API in **Go** with **JWT** authentication and **PostgreSQL** database.
 Currently includes endpoints:
 
 - `POST /signup` – create user  
-- `POST /login` – authenticate user  
-- `GET /me` – get logged-in user data  
+- `POST /login` – user authentication token
+- `GET /login` - token jwt
+- `GET /me` – get logged-in user data
+- `GET /users` - get all users
 - `GET /ping` – test endpoint with date/time
 
 ---
@@ -42,7 +44,8 @@ docker compose up --build
 - `http://localhost:9000/ping`  
 - `http://localhost:9000/signup`  
 - `http://localhost:9000/login`  
-- `http://localhost:9000/me`  
+- `http://localhost:9000/me`
+- `http://localhost:9000/users`
 
 > The port `9000` is the one the API listens on inside the container.
 
