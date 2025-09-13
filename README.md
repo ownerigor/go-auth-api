@@ -1,56 +1,55 @@
 # Go Auth API
 
-API básica em **Go** com autenticação via **JWT** e banco de dados **Postgres**.  
-Atualmente inclui endpoints:
+Basic API in **Go** with **JWT** authentication and **PostgreSQL** database.  
+Currently includes endpoints:
 
-- `POST /signup` – criar usuário  
-- `POST /login` – autenticar usuário  
-- `GET /me` – pegar dados do usuário logado  
-- `GET /ping` – endpoint de teste com data/hora
+- `POST /signup` – create user  
+- `POST /login` – authenticate user  
+- `GET /me` – get logged-in user data  
+- `GET /ping` – test endpoint with date/time
 
 ---
 
-## Tecnologias
+## Technologies
 
 - Go (Golang)  
-- Gin (framework HTTP)  
+- Gin (HTTP framework)  
 - GORM (ORM)  
 - PostgreSQL  
 - Docker & Docker Compose  
 
 ---
 
-## Rodando o projeto
+## Running the project
 
-1. Clone o repositório:
+1. Clone the repository:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone <REPOSITORY_URL>
 cd go-auth-api
 ```
 
-2. Configure variáveis de ambiente no `.env` (exemplo já incluso).  
+2. Configure environment variables in the `.env` file (example already included).  
 
-3. Suba os containers:
+3. Start the containers:
 
 ```bash
 docker compose up --build
 ```
 
-4. Acesse os endpoints:
+4. Access the endpoints:
 
 - `http://localhost:9000/ping`  
 - `http://localhost:9000/signup`  
 - `http://localhost:9000/login`  
 - `http://localhost:9000/me`  
 
-> A porta `9000` é a que a API escuta dentro do container.
+> The port `9000` is the one the API listens on inside the container.
 
 ---
 
-## Observações
+## Notes
 
-- O banco de dados é inicializado com Postgres 16 e volume persistente (`db_data`).  
-- O JWT é usado para autenticação de endpoints privados.  
-- Para desenvolvimento, a API tenta se conectar automaticamente ao banco e reinicia em caso de falha (configuração `restart: always` no Docker).
-
+- The database is initialized with PostgreSQL 16 and a persistent volume (`db_data`).  
+- JWT is used for authentication of private endpoints.  
+- For development, the API automatically tries to connect to the database and restarts on failure (`restart: always` in Docker).
