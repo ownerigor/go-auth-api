@@ -2,10 +2,8 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/ownerigor/go-api-auth/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -23,11 +21,6 @@ type DBConfig struct {
 var DB *gorm.DB
 
 func LoadConfig() DBConfig {
-	err := godotenv.Load("./.env")
-	if err != nil {
-		log.Println("Aviso: .env não encontrado, usando variáveis de ambiente do sistema")
-	}
-
 	return DBConfig{
 		Host:     os.Getenv("DB_HOST"),
 		Port:     os.Getenv("DB_PORT"),
