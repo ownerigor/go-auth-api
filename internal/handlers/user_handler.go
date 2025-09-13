@@ -26,7 +26,7 @@ func SignupHandler(db *gorm.DB) gin.HandlerFunc {
 
 		hashedPassword, err := utils.HashPassword(input.Password)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar usuário"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})
 			return
 		}
 
@@ -38,12 +38,12 @@ func SignupHandler(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		if err := db.Create(&user).Error; err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Email já registrado"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Email already registered"})
 			return
 		}
 
 		c.JSON(http.StatusCreated, gin.H{
-			"message": "Usuário criado com sucesso",
+			"message": "User created successfully",
 		})
 	}
 }
@@ -52,7 +52,7 @@ func GetUsersHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var users []models.User
 		if err := db.Find(&users).Error; err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao buscar usuários"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error when searching for users"})
 			return
 		}
 

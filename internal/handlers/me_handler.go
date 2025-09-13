@@ -12,13 +12,13 @@ func MeHandler(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userID, exists := c.Get("userID")
 		if !exists {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Usuário não encontrado no contexto"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "User not found in context"})
 			return
 		}
 
 		var user models.User
 		if err := db.First(&user, "id = ?", userID).Error; err != nil {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Usuário não encontrado"})
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
 		}
 

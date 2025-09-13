@@ -21,18 +21,18 @@ func LoginHashHandler(db *gorm.DB) gin.HandlerFunc {
 			Password string `json:"password"`
 		}
 		if err := c.ShouldBindJSON(&body); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "JSON inválido"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
 			return
 		}
 
 		var user models.User
 		if err := db.Where("username = ?", body.Username).First(&user).Error; err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenciais inválidas"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 			return
 		}
 
 		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password)); err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenciais inválidas"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 			return
 		}
 
@@ -61,13 +61,13 @@ func LoginJWTHandler(db *gorm.DB) gin.HandlerFunc {
 
 		var token models.UserToken
 		if err := db.Where("token_hash = ? AND expires_at > ?", authHeader, time.Now()).First(&token).Error; err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token hash inválido ou expirado"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired hash token"})
 			return
 		}
 
 		jwtToken, err := services.GenerateJWT(token.UserID)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao gerar JWT"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating JWT"})
 			return
 		}
 

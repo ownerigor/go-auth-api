@@ -38,9 +38,9 @@ func ConnectDataBase(cfg DBConfig) *gorm.DB {
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		panic("Falha ao conectar ao banco de dados!")
+		panic("Failed to connect to database")
 	}
-	fmt.Println("Banco de dados conectado!")
+	fmt.Println("Database connected")
 
 	database.AutoMigrate(&models.User{}, &models.UserToken{})
 
