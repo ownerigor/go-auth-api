@@ -11,6 +11,8 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	//Public routes
 	r.GET("ping", handlers.PingHandler)
 	r.POST("/signup", handlers.SignupHandler(db))
+	r.POST("/login", handlers.LoginHashHandler(db))
+	r.GET("/login", handlers.LoginJWTHandler(db))
 
 	auth := r.Group("/")
 	auth.Use(middleware.AuthMiddleware())

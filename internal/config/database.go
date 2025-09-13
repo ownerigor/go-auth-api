@@ -23,7 +23,7 @@ type DBConfig struct {
 var DB *gorm.DB
 
 func LoadConfig() DBConfig {
-	err := godotenv.Load()
+	err := godotenv.Load("./.env")
 	if err != nil {
 		log.Println("Aviso: .env não encontrado, usando variáveis de ambiente do sistema")
 	}
@@ -49,7 +49,7 @@ func ConnectDataBase(cfg DBConfig) *gorm.DB {
 	}
 	fmt.Println("Banco de dados conectado!")
 
-	database.AutoMigrate(&models.User{})
+	database.AutoMigrate(&models.User{}, &models.UserToken{})
 
 	return database
 }
