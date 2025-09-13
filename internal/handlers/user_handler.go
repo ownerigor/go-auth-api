@@ -47,3 +47,23 @@ func SignupHandler(db *gorm.DB) gin.HandlerFunc {
 		})
 	}
 }
+
+func GetUsersHandler(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var users []models.User
+		if err := db.Find(&users).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao buscar usuários"})
+			return
+		}
+
+		var safeUsers []map[string]interface{}
+		for _, u := range users {
+			safeUsers = append(safeUsers, map[string]interface{}{
+				"id":    u.ID,
+				"name":  u.Name,
+				"email": u.Email,
+			})
+		}
+		c.JSON(http.StatusOK, safeUsers)
+	}
+}

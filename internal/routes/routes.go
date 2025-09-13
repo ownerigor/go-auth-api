@@ -18,5 +18,6 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	auth.Use(middleware.AuthMiddleware())
 	{
 		auth.GET("/me", handlers.MeHandler(db))
+		auth.GET("/users", handlers.GetUsersHandler(db))
 	}
 }
