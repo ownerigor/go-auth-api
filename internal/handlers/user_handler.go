@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/ownerigor/go-api-auth/internal/models"
-	"github.com/ownerigor/go-api-auth/internal/services"
 	"github.com/ownerigor/go-api-auth/pkg/utils"
 	"gorm.io/gorm"
 )
@@ -43,15 +42,8 @@ func SignupHandler(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
-		token, err := services.GenerateJWT(user.ID)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao gerar token"})
-			return
-		}
-
 		c.JSON(http.StatusCreated, gin.H{
 			"message": "Usuário criado com sucesso",
-			"token":   token,
 		})
 	}
 }
